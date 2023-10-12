@@ -8,6 +8,8 @@
 - `react` 18.2.0
 - `react-native` 0.72.5
 - `java` 11以及以上 测试为17
+- `gradle` 17.0.0
+- `buildToolsVersion` 33.0.0
 
 **部署命令**
 ```shell
@@ -26,7 +28,9 @@ yarn run android
 #android 设置临时环境变量
 set JAVA_HOME=D:\Java\jdk-11.0.2
 ```
-
+## 注意事项
+- `rn_app` 这个是app的包名，需要修改为自己的包名
+- `我的app` 这个是app的名称，需要修改为自己的app名称
 
 ## 项目配置
 
@@ -39,7 +43,7 @@ set JAVA_HOME=D:\Java\jdk-11.0.2
 - `prod` 正式、线上环境
 
 
----技术栈：nestjs + mysql + sequelize + jwt + cos + ts
+---技术栈：
 ## 目录结构
 ```shell
 src 目录结构:
