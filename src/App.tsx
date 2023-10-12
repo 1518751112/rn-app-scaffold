@@ -1,21 +1,22 @@
-import React, { useState, useEffect, Component } from "react";
-import { PermissionsAndroid, StatusBar } from "react-native";
+import React, { useState, useEffect, Component, useRef } from "react";
+import { AppState, PermissionsAndroid, StatusBar } from "react-native";
 import LoginScreen from 'views/login';
 import TabBar from 'componests/tabBar';
 import { createNavigationContainerRef, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavName, NDemo } from "common/constant";
 import Models from './models';
-import { initDva, initRequest, useStore } from "utils/dva16";
+import { initDva, initRequest, setNetInfo, useStore } from "utils/dva16";
 import { Provider, Toast } from "@ant-design/react-native";
-
+import NetInfo from '@react-native-community/netinfo';
+import { config } from "configs";
 export const navigationRef = createNavigationContainerRef()
 const Stack = createNativeStackNavigator()
 /*------------------------ 初始化dva16 ------------------------*/
 initDva(Models, { printLog: false, useImmer: false })
-initRequest("http://127.0.0.1", (status: any, data: any) => {
+initRequest(config.serverHome, (status: any, data: any) => {
   console.log('[API Error]', status, data)
-  const { errorCode } = data
+  const { errorCode } = data||{}
   if (status === 401) {
 
   } else if (status === 400) {
@@ -48,11 +49,30 @@ async function requestLocationPermission() {
 }
 const App = () => {
   const { name } = useStore(NDemo)
-  const [isLoad, setIsLoad] = useState(true);
+  const appState = useRef(AppState.currentState)
+  const netStateInfo = useRef(AppState.currentState)
+
   useEffect(() => {
-    console.log("444",name);
+    console.log("444",name,config);
     requestLocationPermission()
+    const stateListener = AppState.addEventListener('change', handleAppStateChange)
+    const net = NetInfo.addEventListener(
+      handleConnectivityChange
+    );
+    return () => {
+      stateListener.remove()
+      net()
+    }
   },[]);
+  const handleAppStateChange = (nextAppState: any) => {
+    //监听app是在后台还是前台
+    appState.current = nextAppState
+  }
+  const handleConnectivityChange = (state:any) => {
+    //监听网络状态
+    netStateInfo.current = state
+    setNetInfo(state)
+  };
 
   return (
     <Provider>

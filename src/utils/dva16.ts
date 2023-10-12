@@ -6,6 +6,13 @@ import { Toast } from '@ant-design/react-native'
 /* 参考dva接口绑定 */
 const config: any = {}
 const store: any = {}
+const netInfo:{
+  isConnected:boolean
+  type:any
+} = {
+  isConnected:false,
+  type:null
+}
 const immer = (config: any) => (set: any, get: any, api: any) => config((fn: any) => set(produce(fn)), get, api)
 const wrapPromise = (promise: any) => {
   let status: string = 'pending'
@@ -118,6 +125,15 @@ export async function effect(namespace: string, type: any, payload: any | null |
     console.error(`effects[${type}] function not exsits in models[${namespace}]`)
   }
 }
+export function setNetInfo(state:any) {
+  Object.keys(state).forEach(key=>{
+    // @ts-ignore
+    netInfo[key] = state[key]
+  })
+}
+export function getNetInfo() {
+  return netInfo
+}
 
 /* restful + json + jwt基本网络库 */
 const requstParams: any = {
@@ -165,6 +181,10 @@ export function requestFile(url: any, file: string | Blob | any) {
   // return request(url, { method: 'POST', body }, 'application/form-data')
 }
 function request(url: string, options: { method: any; body: any }, ContentType: string | null = null, loadingTips: string | null = null) {
+  if(!netInfo.isConnected){
+    Toast.fail('网络连接失败')
+    throw Error('网络连接失败')
+  }
   return new Promise((resolve, reject) => {
     let { method, body } = options
     // 添加url前缀
@@ -202,7 +222,7 @@ function request(url: string, options: { method: any; body: any }, ContentType: 
       .then(({ data }: any) => {
         loading && Toast.remove(loading)
         config.printLog && console.log('[res]', method, url, data)
-        resolve(data?.data)
+        resolve(data)
       })
       .catch((e: { response: { status: any; data: any } }) => {
         loading && Toast.remove(loading)
@@ -210,6 +230,7 @@ function request(url: string, options: { method: any; body: any }, ContentType: 
         reject(e)
         if (e.response) {
           let { status, data } = e.response
+
           requstParams.errorHanlder(status, data)
         } else {
           requstParams.errorHanlder(e)

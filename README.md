@@ -31,6 +31,7 @@ set JAVA_HOME=D:\Java\jdk-11.0.2
 ## 注意事项
 - `rn_app` 这个是app的包名，需要修改为自己的包名
 - `我的app` 这个是app的名称，需要修改为自己的app名称
+- `java/com/rn_app` 这个是包名文件夹，需要修改为自己的包名文件夹
 
 ## 项目配置
 

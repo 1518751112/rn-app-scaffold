@@ -1,8 +1,10 @@
 import { Image, PermissionsAndroid, Text, TouchableOpacity, View } from "react-native";
 import { useEffect } from "react";
-import { Toast } from "@ant-design/react-native";
+import { Button, Toast, WhiteSpace } from "@ant-design/react-native";
 import global from "views/global";
 import Geolocation from 'react-native-geolocation-service';
+import { effect } from "utils/dva16";
+import { EGet, NDemo } from "common/constant";
 const coordTransform = require('coordtransform');
 
 let timeCode:any = null
@@ -44,23 +46,29 @@ export default ({ navigation }: any) => {
     );
   }
 
+  const dataHandle  = async ()=>{
+    const result = await effect(NDemo, EGet, { type: 1 })
+    Toast.info(result,1)
+  }
+
   return (
     <View style={{
       width:"100%",
       height:"100%",
     }}>
-<Image style={{
-width:50,
-  height:50,
-}} source={require('assets/icons/update_icon.png')} />
-      <TouchableOpacity style={[global.rowFlexStartCenter]}
-                        onPress={getLoading}
-      >
-        <Text style={{
-          color:"#000",
-        }}>首页</Text>
-      </TouchableOpacity>
 
+      <TouchableOpacity style={[global.submitButton]}
+                        onPress={()=>{
+                          Toast.info("触摸文字",1)
+                        }}
+      >
+        <Text style={[global.btnTxt]}>首页【触摸文字】</Text>
+
+      </TouchableOpacity>
+      <WhiteSpace />
+      <Button onPress={getLoading}>获取定位</Button>
+      <WhiteSpace />
+      <Button onPress={dataHandle}>数据处理[需要联网]</Button>
     </View>
   )
 }

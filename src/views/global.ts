@@ -71,5 +71,17 @@ const global = StyleSheet.create({
     color: 'rgba(153, 153, 153, 1)',
     paddingVertical: 20,
   },
+  submitButton: {
+    backgroundColor: 'rgba(3, 144, 252, 1)',
+    marginHorizontal: 17,
+    height: 48,
+    borderRadius: 112,
+  },
+  btnTxt: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+    lineHeight: 48,
+  },
 })
 export default global

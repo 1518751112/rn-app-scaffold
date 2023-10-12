@@ -15,9 +15,10 @@ export default {
     },
   },
   effects: {
-    async [EGet]({ payload }: any, { call, reducer, select, effect }: any) {
-      const res = await requestGet('basic/information', payload)
-      reducer(RSetState, { newsList: res })
+    async [EGet](payload: any, { call, reducer, select, effect }: any) {
+      const res = await requestGet('', payload)
+      console.log(res,payload);
+      return "数据处理成功"
     },
   },
 }
