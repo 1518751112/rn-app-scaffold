@@ -65,3 +65,5 @@ yarn-error.log
 # testing
 /coverage
 .env
+.env.debug
+.env.release
