@@ -32,7 +32,7 @@ set JAVA_HOME=D:\Java\jdk-11.0.2
 - `rn_app` 这个是app的包名，需要修改为自己的包名
 - `我的app` 这个是app的名称，需要修改为自己的app名称
 - `java/com/rn_app` 这个是包名文件夹，需要修改为自己的包名文件夹
-
+- `react-devtools` 使用浏览器调试需要安装这个: yarn global add react-devtools
 ## 项目配置
 
 **项目中的常用环境**

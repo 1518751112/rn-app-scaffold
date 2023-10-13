@@ -1,4 +1,4 @@
 
 export const config = {
-    serverHome: "https://s2d.orbitsoft.cn/yh1/"
+    serverHome: "http://192.168.31.8:15030/"
 }

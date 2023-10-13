@@ -47,6 +47,12 @@ async function requestLocationPermission() {
     console.error(error);
   }
 }
+//开启网络调试
+/*const _XHR = global.originalXMLHttpRequest ?
+  global.originalXMLHttpRequest :
+  global.XMLHttpRequest
+
+XMLHttpRequest = _XHR*/
 const App = () => {
   const { name } = useStore(NDemo)
   const appState = useRef(AppState.currentState)

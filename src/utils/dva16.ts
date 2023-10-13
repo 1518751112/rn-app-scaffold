@@ -183,7 +183,7 @@ export function requestFile(url: any, file: string | Blob | any) {
 function request(url: string, options: { method: any; body: any }, ContentType: string | null = null, loadingTips: string | null = null) {
   if(!netInfo.isConnected){
     Toast.fail('网络连接失败')
-    throw Error('网络连接失败')
+    return null
   }
   return new Promise((resolve, reject) => {
     let { method, body } = options
